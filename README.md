@@ -17,6 +17,9 @@ Las validaciones usan operadores lógicos (`and`, `not`) para combinar condicion
 
 Los operadores aritméticos aparecen en la validación del RUT, que aplica una serie de multiplicaciones y sumas para calcular si el dígito verificador es correcto, y también para llevar el conteo de intentos y calcular el promedio al final.
 
+Los `if`, `elif` y `else` controlan qué mensaje mostrar o qué camino tomar según el dato ingresado.
+
+
 ## Requisitos
 
 - Python 3.x
