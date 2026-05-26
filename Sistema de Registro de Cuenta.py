@@ -2,10 +2,23 @@ cuentas = []
 total_intentos = 0
  
 def existe_RUT(rut):
-    return "-" in rut and len(rut) >= 9
+    if "-" not in rut or len(rut) < 9:
+        return False
+    cuerpo, dv = rut.split("-")
+    if not cuerpo.isdigit():
+        return False
+    suma = 0
+    for i, d in enumerate(reversed(cuerpo)):
+        suma += int(d) * (2 + i % 6)
+    resto = 11 - (suma % 11)
+    verificador = "K" if resto == 10 else ("0" if resto == 11 else str(resto))
+    return dv.upper() == verificador
  
 def contrasena_valida(contrasena):
-    return len(contrasena) >= 8
+    tiene_largo = len(contrasena) >= 8
+    tiene_numero = any(c.isdigit() for c in contrasena)
+    tiene_mayuscula = any(c.isupper() for c in contrasena)
+    return tiene_largo and tiene_numero and tiene_mayuscula
  
 def RegistrarDatos(nombre, ap_paterno, ap_materno, rut, contrasena):
     cuentas.append({
@@ -43,7 +56,7 @@ def main():
             intentos += 1
             rut = input("RUT inválido. Intente de nuevo: ")
  
-        contrasena = input("Contraseña (mín. 8 caracteres): ")
+        contrasena = input("Contraseña (mín. 8 caracteres, número y mayúscula): ")
         while not contrasena_valida(contrasena):
             intentos += 1
             contrasena = input("Contraseña inválida. Intente de nuevo: ")
